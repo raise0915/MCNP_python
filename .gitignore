@@ -1,0 +1,6 @@
+.vscode
+.__pycache__
+path_holder.py
+zip.py
+test.py
+*.pyc
