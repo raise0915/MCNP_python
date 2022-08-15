@@ -3,7 +3,7 @@
 # Environment
 <li> MCNP6
 <li> Windows 11
-<li> python 3.9.4 (Anaconda)
+<li> python 3.10.4 (Anaconda)
 <li> Visual Studio Code<br>
 <br>
 
