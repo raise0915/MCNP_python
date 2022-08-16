@@ -1,6 +1,6 @@
 import pandas as pd
 
-def make_output(output_env,file_name) -> pd.DataFrame:
+def make_output(output_env,file_name,out) -> pd.DataFrame:
     data = pd.DataFrame()
     items = ["Boron","Neutron","Nitrogen","Gamma"] # four pattern -> add them according to 
     cell = [i for i in range(2,43)]
@@ -22,7 +22,6 @@ def make_output(output_env,file_name) -> pd.DataFrame:
                             data[items[count]] = res
                             data[items[count]+str("_error")] = error
                             count += 1
-
                         else:
                             if flag:
                                 data[items[count]] = res
@@ -48,9 +47,12 @@ def make_output(output_env,file_name) -> pd.DataFrame:
             data[items[count]+str("_error")] = error
 
     data = data.set_index("cell")
-
-    # save original_data to csv 
-    data.to_csv(f"{output_env}{file_name}.csv")
+    
+    
+     # save original_data to csv 
+    if out == 1:
+        data.to_csv(f"{output_env}{file_name}.csv")
+    
     return data
     
         
