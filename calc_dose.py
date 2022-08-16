@@ -1,7 +1,7 @@
 
 def dose_boron(f4,area,flag:int,cf:float)->float:
     flux_n = 10**9 # neutron flux [count/sec]
-    density = 2.37 # density[g/cc]
+    density = 1.00 # tissue density[g/cc]
     Q = 2.31 # energy by boron-neutron reaction [MeV]
 
     # CBE - Compound biological effective factor by BPA
@@ -29,7 +29,7 @@ def dose_boron(f4,area,flag:int,cf:float)->float:
 
 def dose_nitro(f4,area,cf) -> float:
     flux_n = 10**9 # neutron flux   - 
-    density = 0.00116528 # density[g/cc]
+    density = 1.00  # tissue density[g/cc]
     CBE = 3.0 
     Q = 2.31 # energy by boron-neutron reaction
     energy = 2.31*(10**6)*1.6*(10**-19) #[J]
@@ -46,12 +46,11 @@ def dose_gamma(f6,area,cf) -> float:
     flux_n = 10**9
     RBE = 1
     
-    total = f6*(10**6)*1000 # [J/kg/source] = [Gy/source]
+    total = f6*(10**6)*1.6*(10**-19)*1000 # [J/kg/source] = [Gy/source]
     total = total*flux_n*area # [Gy/sec]
     total = total*3600*RBE # [Gy-eq/h]
     total *= cf
     return total
-    
     
 # !! Calculate input file excluding Nitrogen !! 
 # H2 Dose
@@ -60,7 +59,7 @@ def dose_neutron(f6,area,cf) -> float:
     flux_n = 10**9
     RBE = 3.0
     
-    total = f6*(10**6)*1000 # [J/kg/source] = [Gy/source]
+    total = f6*(10**6)*1.6*(10**-19)*1000 # [J/kg/source] = [Gy/source]
     total = total*flux_n*area # [Gy/sec]
     total = total*3600*RBE # [Gy-eq/h]
     total *= cf
