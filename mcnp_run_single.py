@@ -15,9 +15,9 @@ def mcnp_run(path):
 
     # シミュレーション用のMCNPファイル内に入っていればファイル名のみ、それ以外であれば絶対パスを指定する
     file_name = r"04-07-2021_Light.ip"
-    file_name = r"square"
+    #file_name = r"square"
     # run MCNP6
-    subprocess.run(["mcnp6.exe", f"i=INPUT/{file_name}.i", f"o=OUTPUT/{file_name}.o"])
+    subprocess.run(["mcnp6.exe", f"i=INPUT/{file_name}", f"o=OUTPUT/{file_name}.o"])
     # mcnp6.exe i=INPUT/square.i o=OUTPUT/square.o
 
     t2 = time.time()
