@@ -4,19 +4,22 @@ import os
 import multiprocessing
 import time
 
-path = r"C:\Users\yuri1\Documents\MCNP"
-def mcnp_run(path,file_name):
+from path_holder import path_holder
+
+def mcnp_run(file_name):
+    PATH_INPUT,PATH_OUTPUT,PATH_MCNP  = path_holder()
     # set path for input / output file 
 
     t1 = time.time()
 
     print()
-    os.chdir(path)
-
-    # シミュレーション用のMCNPファイル内に入っていればファイル名のみ、それ以外であれば絶対パスを指定する
+    os.chdir(PATH_MCNP)
     # file_name = r"04-07-2021_Light.ip"
     # run MCNP6
-    subprocess.run(["mcnp6.exe", f"i=INPUT/{file_name}", f"o=OUTPUT/{file_name}.o"])
+    if not os.path.exists(PATH_OUTPUT+file_name):
+        os.mkdir(PATH_OUTPUT+file_name)
+        
+    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}", f"o={PATH_OUTPUT}{file_name}.o"])
     # mcnp6.exe i=INPUT/square.i o=OUTPUT/square.o
 
     t2 = time.time()
@@ -26,4 +29,4 @@ def mcnp_run(path,file_name):
 if __name__ == '__main__':
     file_name = r"square_cf06"
     # mcnp_run(path,file_name)
-    mcnp_run(path,f"{file_name}_exN")
+    mcnp_run(file_name=input("filename? : "))

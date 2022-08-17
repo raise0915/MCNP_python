@@ -8,15 +8,22 @@ import seaborn as sns
 import numpy as np
 from find_location import find_location
 from plot_result import plot_scatter,plot_line
-
+import os
 
 def make_result(input_env,output_env,file_name,area,out) :
+        # make dir
+        if not os.path.exists(output_env):
+            os.mkdir(output_env)
+        
+        # create csv of output
         data = make_output(output_env,file_name,out)
         data_ex = make_output(output_env,f'{file_name}_exN',out)
         
         result = []
-        
+        # Columns 
         items = ["Boron","Neutron","Nitrogen","Gamma","Total"]
+        
+        # Obtain locations of cells
         location = find_location(input_env,file_name)
         location = location.set_index(data.index)     
         
@@ -26,17 +33,19 @@ def make_result(input_env,output_env,file_name,area,out) :
             else:
                 flag = 2
             
+            # Calculate Dose and Combine results
             boron = dose_boron(data["Boron"][i],area,flag,0.5)
             nitro = dose_nitro(data["Nitrogen"][i],area,0.5)
             neutron = dose_neutron(data_ex["Neutron"][i],area,0.5)
             gamma = dose_gamma(data["Gamma"][i],area,0.5)
             total = boron+nitro+neutron+gamma
             result.append([boron,nitro,neutron,gamma,total])
- 
-        result = pd.DataFrame(result,columns=items,index=data.index)
 
+        # Make DataFrame of the result
+        result = pd.DataFrame(result,columns=items,index=data.index)
         result = pd.merge(result,location,left_index=True,right_index=True)
         
+        # Write Excel if out == 1
         if out == 1:
             with pd.ExcelWriter(f"{output_env}{file_name}_output.xlsx") as writer:
                 data.to_excel(writer, sheet_name='MCNP')
@@ -44,6 +53,7 @@ def make_result(input_env,output_env,file_name,area,out) :
                 result.to_excel(writer, sheet_name=f'Result')
         
         return result
+    
 """ 
 # test
 from path_holder import path_holder

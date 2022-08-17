@@ -4,3 +4,5 @@ path_holder.py
 zip.py
 test.py
 *.pyc
+CF_list.py
+*.gitignore
