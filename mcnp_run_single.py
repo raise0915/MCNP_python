@@ -18,8 +18,11 @@ def mcnp_run(file_name):
     # run MCNP6
     if not os.path.exists(PATH_OUTPUT+file_name):
         os.mkdir(PATH_OUTPUT+file_name)
-        
-    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}.o"])
+    if ".ip" in file_name:
+        file_name = file_name.replace(".ip","")
+        subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.ip", f"o={PATH_OUTPUT}{file_name}.o"])
+    else:    
+        subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}.o"])
     # mcnp6.exe i=INPUT/square.i o=OUTPUT/square.o
 
     t2 = time.time()
@@ -27,6 +30,6 @@ def mcnp_run(file_name):
     
 
 if __name__ == '__main__':
-    file_name = r"square"
+    file_name = r"04-07-2021_Light_h20.ip"
     # mcnp_run(path,file_name)
     mcnp_run(file_name)
