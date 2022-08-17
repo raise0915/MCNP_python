@@ -27,6 +27,6 @@ def mcnp_run(file_name):
     
 
 if __name__ == '__main__':
-    file_name = r"square_cf06"
+    file_name = r"square"
     # mcnp_run(path,file_name)
-    mcnp_run(file_name=input("filename? : "))
+    mcnp_run(file_name)

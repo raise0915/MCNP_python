@@ -1,23 +1,24 @@
 from path_holder import path_holder
 
 import numpy as np
-from run_mcnp import run_mcnp
 import os
+import multiprocessing
+import time
 
 from make_result import make_result
-import time
+from run_mcnp import run_mcnp
 from add_elements import add_elements
 from makefile_exN import makefile_exN
 
-PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
 filename = "square_temp"
 area = np.pi*(10**2)
 
-cf = 0.7
-rad = 5 #[cm]
+cf = 0.8
+rad = 10 #[cm]
 E = 0.01 # [MeV]
 
 def main():
+    PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
     t1 = time.time()
     # add information - cf:Current/Flux ratio, rad:beam rad, E:beam energy
     file_name = add_elements(filename,cf,rad,E)
@@ -26,15 +27,17 @@ def main():
     makefile_exN(PATH_INPUT,file_name)
     
     # make dir
-    if not os.path.exists(PATH_OUTPUT+file_name):
-        os.mkdir(PATH_OUTPUT+file_name)  
+    if not os.path.exists(f'{PATH_OUTPUT}{file_name}'):
+        os.mkdir(f'{PATH_OUTPUT}{file_name}') 
           
-    # mcnp_run 
+    # mcnp_run     
     run_mcnp(file_name)
-    run_mcnp(f'{file_name}_exN')
-    
+            
     # 第4因数を1にするとcsvが出力される
-    result = make_result(PATH_INPUT,f"{PATH_OUTPUT}{file_name}/",file_name,area,1)
+    result = make_result(PATH_INPUT,PATH_OUTPUT,file_name,area,1)
+    
+    if os.path.exists(PATH_MCNP+"/runtpe"):
+        os.remove(PATH_MCNP+"/runtpe")
     
     t2 = time.time()
     print((t2-t1)/60) #分

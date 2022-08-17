@@ -1,5 +1,4 @@
 import subprocess
-import time
 import os
 import time
 
@@ -15,7 +14,10 @@ def run_mcnp(file_name):
         
     # run MCNP6  
     # mcnp6.exe i={path_input} o={path_output}        
-    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}.o"])
+    run = subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
+    run = subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}/{file_name}_exN.o"])
+
+    print("mcnp FINISH")
 
 
     

@@ -54,19 +54,7 @@ def make_result(input_env,output_env,file_name,area,out) :
         
         return result
     
-""" 
-# test
-from path_holder import path_holder
-PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
-file_name = "square_1e9"
-area = np.pi*(10**2)
-result = make_result(PATH_INPUT,PATH_OUTPUT,file_name,area,1)
 
-plot_scatter(result,file_name,2)
-# plot_line(result,file_name,1)
-
-# data = result[["x","y","Total","rad"]]
-""" 
 
 
 
