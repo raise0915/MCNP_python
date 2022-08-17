@@ -15,9 +15,9 @@ def main():
     # s = multiprocessing.Process(mcnp_run(PATH_MCNP,file_name))
     # s.start()
     
-    # 第三因数を1にするとcsvが出力される
-    result = make_result(PATH_OUTPUT,file_name,area,1)
-    print(result)
+    # 第4因数を1にするとcsvが出力される
+    result = make_result(PATH_INPUT,PATH_OUTPUT,file_name,area,1)
+
 
 
 if __name__ =='__main__':
