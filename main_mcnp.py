@@ -13,9 +13,9 @@ PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
 filename = "square_temp"
 area = np.pi*(10**2)
 
-cf = 0.5
-rad = 10
-E = 0.01
+cf = 0.7
+rad = 5 #[cm]
+E = 0.01 # [MeV]
 
 def main():
     t1 = time.time()
