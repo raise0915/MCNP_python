@@ -12,10 +12,6 @@ def run_mcnp(file_name):
 
     print()
     os.chdir(PATH_MCNP)
-
-    # make dir
-    if not os.path.exists(PATH_OUTPUT+file_name):
-        os.mkdir(PATH_OUTPUT+file_name)
         
     # run MCNP6  
     # mcnp6.exe i={path_input} o={path_output}        

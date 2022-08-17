@@ -19,7 +19,7 @@ def mcnp_run(file_name):
     if not os.path.exists(PATH_OUTPUT+file_name):
         os.mkdir(PATH_OUTPUT+file_name)
         
-    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}", f"o={PATH_OUTPUT}{file_name}.o"])
+    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}.o"])
     # mcnp6.exe i=INPUT/square.i o=OUTPUT/square.o
 
     t2 = time.time()
