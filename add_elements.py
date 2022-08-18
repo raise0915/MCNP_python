@@ -25,10 +25,12 @@ def add_beam(file_name,cf,rad,E,o):
  
  
 def add_elements(file_name,cf,rad,E):
-    save_file = f'{file_name}_cf{cf}_rad{rad}_e{E}'   
+    save_file = f'{file_name}_cf{cf}_rad{rad}_e{E}'
+    if "temp" in save_file:
+        save_file = save_file.replace("_temp","")  
     with open(f'{PATH_INPUT}{save_file}.i','w') as o:
         add_beam(file_name,cf,rad,E,o)
-    
+
     return save_file
 
 
