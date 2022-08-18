@@ -9,7 +9,7 @@
 
 # Preparation
 You need to set the enviromnental variables on your computer below.<br>
-You can check where are these paths at **mcnp_env_620.bat**
+(Check where these paths at **mcnp_env_620.bat** )
 <li>DATAPATH
 <li>ISCDATA
 <li>MCNPPATH
