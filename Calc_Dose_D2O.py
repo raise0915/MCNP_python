@@ -1,5 +1,5 @@
 
-def dose_boron(f4,area,flag:int,cf:int)->float:
+def dose_boron(f4,area,flag:int,cf)->float:
     flux_n = 10**9 # neutron flux [count/sec]
     density = 2.37 # density[g/cc]
     Q = 2.31 # energy by boron-neutron reaction [MeV]
