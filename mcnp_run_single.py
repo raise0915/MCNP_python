@@ -16,16 +16,21 @@ def mcnp_run(file_name):
     os.chdir(PATH_MCNP)
     # file_name = r"04-07-2021_Light.ip"
     # run MCNP6
+
+    # extention 1: .i 2: .ip
+    if ".ip" in file_name:
+        ext = ".ip"
+    else:
+        ext = ".i"
+
+    file_name = file_name.replace(".ip","")
+    
     if not os.path.exists(PATH_OUTPUT+file_name):
         os.mkdir(PATH_OUTPUT+file_name)
         
     # run mcnp 
     # ex:  mcnp6.exe i=INPUT/square.i o=OUTPUT/square.o
-    if ".ip" in file_name:
-        file_name = file_name.replace(".ip","")
-        subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.ip", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
-    else:    
-        subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}.i", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
+    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}{ext}", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
     
     # remove runtpe
     if os.path.exists(PATH_MCNP+"/runtpe"):
@@ -37,6 +42,6 @@ def mcnp_run(file_name):
 
 if __name__ == '__main__':
     file_name = r"04-07-2021_Light_h20.ip"
-    file_name = r"square_cf0.7_rad10_e0.01_exN"
+    file_name = r"d2o_tset.ip"
     # mcnp_run(path,file_name)
     mcnp_run(file_name)

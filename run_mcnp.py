@@ -24,8 +24,8 @@ def run_mcnp(file_name,flag):
         
     # run MCNP6  
     # mcnp6.exe i={path_input} o={path_output}        
-    run = subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}{flag}", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
-    run = subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}{flag}", f"o={PATH_OUTPUT}{file_name}/{file_name}_exN.o"])
+    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}{ext}", f"o={PATH_OUTPUT}{file_name}/{file_name}.o"])
+    subprocess.run(["mcnp6.exe", f"i={PATH_INPUT}{file_name}{ext}", f"o={PATH_OUTPUT}{file_name}/{file_name}_exN.o"])
 
     print("mcnp FINISH")
 

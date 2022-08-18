@@ -1,9 +1,12 @@
 import pandas as pd
 
+cell_start = 2
+cell_end = 42
+
 def make_output(output_env,file_name,out) -> pd.DataFrame:
     data = pd.DataFrame()
     items = ["Boron","Neutron","Nitrogen","Gamma"] # four pattern -> add them according to 
-    cell = [i for i in range(2,43)]
+    cell = [i for i in range(cell_start,cell_end+1)]
     data["cell"] = cell
     count = 0
     res = []
@@ -13,9 +16,9 @@ def make_output(output_env,file_name,out) -> pd.DataFrame:
         lines = f.readlines()
         lines_strip = [line.strip() for line in lines ]
         for i,line in enumerate(lines_strip):
-            for j in range(2,43):
+            for j in range(cell_start,cell_end+1):
                 if lines_strip[i] == f"cell  {j}":
-                    if j == 2:
+                    if j == cell_start:
                         if "107" in lines_strip[i+1]:
                             pass
                         elif "103" in lines_strip[i+1]:
@@ -54,6 +57,9 @@ def make_output(output_env,file_name,out) -> pd.DataFrame:
         data.to_csv(f"{output_env}{file_name}.csv")
     
     return data
+    
+
+    
     
         
     

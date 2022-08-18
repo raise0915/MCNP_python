@@ -7,10 +7,11 @@ import openpyxl
 import seaborn as sns
 import numpy as np
 from find_location import find_location
+from make_output_d2o import make_output_d2o
 from plot_result import plot_scatter,plot_line
 import os
 
-def make_result(input_env,output_env,file_name,area,out) :
+def make_result(input_env,output_env,file_name,area,cf,out) :
         # make dir
         if not os.path.exists(output_env):
             os.mkdir(output_env)
@@ -24,7 +25,7 @@ def make_result(input_env,output_env,file_name,area,out) :
         items = ["Boron","Neutron","Nitrogen","Gamma","Total"]
         
         # Obtain locations of cells
-        location = find_location(input_env,file_name)
+        location = find_location(input_env,file_name,1)
         location = location.set_index(data.index)     
         
         for i in range(2,43):
@@ -34,10 +35,10 @@ def make_result(input_env,output_env,file_name,area,out) :
                 flag = 2
             
             # Calculate Dose and Combine results
-            boron = dose_boron(data["Boron"][i],area,flag,0.5)
-            nitro = dose_nitro(data["Nitrogen"][i],area,0.5)
-            neutron = dose_neutron(data_ex["Neutron"][i],area,0.5)
-            gamma = dose_gamma(data["Gamma"][i],area,0.5)
+            boron = dose_boron(data["Boron"][i],area,flag,cf)
+            nitro = dose_nitro(data["Nitrogen"][i],area,cf)
+            neutron = dose_neutron(data_ex["Neutron"][i],area,cf)
+            gamma = dose_gamma(data["Gamma"][i],area,cf)
             total = boron+nitro+neutron+gamma
             result.append([boron,nitro,neutron,gamma,total])
 
