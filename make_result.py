@@ -13,8 +13,6 @@ import os
 
 def make_result(input_env,output_env,file_name,area,cf,out) :
         # make dir
-        if not os.path.exists(output_env):
-            os.mkdir(output_env)
         
         # create csv of output
         data = make_output(output_env,file_name,out)
@@ -29,7 +27,7 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
         location = location.set_index(data.index)     
         
         for i in range(2,43):
-            if i ==2:
+            if i==2:
                 flag = 1
             else:
                 flag = 2
@@ -57,5 +55,8 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
     
 
 
-
-
+from path_holder import path_holder
+PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
+file_name = 'square_1e9'
+data = make_result(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,10*10*np.pi,0.5,1)
+plot_scatter(data,file_name,1)

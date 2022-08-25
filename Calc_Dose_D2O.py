@@ -1,10 +1,10 @@
 
 def dose_boron(f4,area,flag:int,cf)->float:
-    flux_n = 10**9 # neutron flux [count/sec]
-    density = 2.37 # density[g/cc]
+    flux_n = 8.22e13 
+    density = 1.03 # density[g/cc]
     Q = 2.31 # energy by boron-neutron reaction [MeV]
 
-    # 1 - tumoe 2 - normal brain
+    # 1 - tumor 2 - normal brain
     if flag == 1:
         CBE = 3.8
         C = 3.5
@@ -25,10 +25,10 @@ def dose_boron(f4,area,flag:int,cf)->float:
 
 def dose_nitro(f4,area,cf) -> float:
     flux_n = 8.22e13 # neutron flux   - 
-    density = 0.00116528 # density[g/cc]
+    density = 1.03 # density[g/cc]
     CBE = 3.0 
-    Q = 2.31 # energy by boron-neutron reaction
-    energy = 2.31*(10**6)*1.6*(10**-19) #[J]
+    Q = 0.626 # energy by boron-neutron reaction
+    energy = 0.626*(10**6)*1.6*(10**-19) #[J]
     
     total = f4/density*energy*1000 #[J/kg/source] = [Gy/source]
     total = total*flux_n*area # [Gy/sec]
@@ -42,7 +42,7 @@ def dose_gamma(f6,area,cf) -> float:
     flux_n = 8.22e13
     RBE = 1.0
     
-    total = f6*(10**6)*1000 # [J/kg/source] = [Gy/source]
+    total = f6*(10**6)*1.6*(10**-19)*1000 # [J/kg/source] = [Gy/source]
     total = total*flux_n*area # [Gy/sec]
     total = total*3600*RBE # [Gy-eq/h]
     total *= cf
@@ -56,7 +56,7 @@ def dose_neutron(f6,area,cf) -> float:
     flux_n = 8.22e13
     RBE = 3.2
     
-    total = f6*(10**6)*1000 # [J/kg/source] = [Gy/source]
+    total = f6*(10**6)*1.6*(10**-19)*1000 # [J/kg/source] = [Gy/source]
     total = total*flux_n*area # [Gy/sec]
     total = total*3600*RBE # [Gy-eq/h]
     total *= cf

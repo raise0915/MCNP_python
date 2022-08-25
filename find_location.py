@@ -26,28 +26,17 @@ def find_location(PATH_INPUT,file_name,ver)->pd.DataFrame:
             if flag and "s" in line:
                 a = list(map(str,lines_strip[i].split()))
                 
-                if ver == 1:
-                    if a[1] == "sx":
-                        x = float(a[2])
-                        y = 0
-                        z = 0
-                        rad = float(a[3])
-                    else:
-                        x = float(a[2])
-                        y = float(a[3])
-                        z = float(a[4])
-                        rad = float(a[5])
+                if a[1] == "sx":
+                    x = float(a[2])
+                    y = 0
+                    z = 0
+                    rad = float(a[3])
                 else:
-                    if a[2] == "sx":
-                        x = float(a[3])
-                        y = 0
-                        z = 0
-                        rad = float(a[4])
-                    else:
-                        x = float(a[3])
-                        y = float(a[4])
-                        z = float(a[5])
-                        rad = float(a[6])                    
+                    x = float(a[2])
+                    y = float(a[3])
+                    z = float(a[4])
+                    rad = float(a[5])
+                  
                     
                 x_list.append(x)
                 y_list.append(y)

@@ -35,10 +35,10 @@ def make_result_d2o(input_env,output_env,file_name,area,out) :
             # Calculate Dose and Combine results
             boron = dose_boron(data["Boron"][i],area,flag,1)
             nitro = dose_nitro(data["Nitrogen"][i],area,1)
-            neutron = dose_neutron(data_ex["Neutron"][i],area,0.5)
+            neutron = dose_neutron(data_ex["Neutron"][i],area,1)
             gamma = dose_gamma(data["Gamma"][i],area,1)
-            total = boron+nitro+gamma
-            result.append([boron,nitro,gamma,total])
+            total = boron+nitro+gamma+neutron
+            result.append([boron,neutron,nitro,gamma,total])
 
         # Make DataFrame of the result
         result = pd.DataFrame(result,columns=items,index=data.index)
@@ -52,3 +52,10 @@ def make_result_d2o(input_env,output_env,file_name,area,out) :
                 result.to_excel(writer, sheet_name=f'Result')
         
         return result
+
+# """test
+from path_holder import path_holder
+PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
+file_name = 'd2o_tset_h0.2'
+make_result_d2o(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,2,1)
+# """
