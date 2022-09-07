@@ -17,7 +17,7 @@ def dose_boron(f4,area,flag:int,cf):
         CBE = 1.35
         C = 1
     elif flag == 3:
-        CBE = 2.5
+        CBE = 1.35
         C = 1
     else:
         raise Exception('Choose the type of tissue : tumor:1 brain tissue:2 skin:3')

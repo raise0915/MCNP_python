@@ -9,9 +9,9 @@ from run_mcnp import run_mcnp
 from makefile_exN import  makefile_exN_D2O
 from change_rate_d2o import change_rate_d2o
 
-area = np.pi*(10**2)
+area = np.pi*(0.125**2)
 
-rate_list = [1.0,0.1,0.2] # hard water rate
+rate_list = [0,0.1,0.2] # hard water rate
 def main():
     PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
     for rate in rate_list:
@@ -32,8 +32,9 @@ def main():
         # mcnp_run     
         run_mcnp(file_name,2)
         
+        flag = 1 # tumor
         try:
-            result = make_result_d2o(PATH_INPUT,PATH_OUTPUT,file_name,area,1)
+            make_result_d2o(PATH_INPUT,PATH_OUTPUT,file_name,area,flag,1)
         except:
             pass
         

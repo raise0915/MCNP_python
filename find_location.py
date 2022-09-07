@@ -23,14 +23,17 @@ def find_location(PATH_INPUT,file_name,ver)->pd.DataFrame:
                 flag = False
                 break
             
+            u = 0 #universe
             if flag and "s" in line:
                 a = list(map(str,lines_strip[i].split()))
+                if "sx" in a and len(a) >= 5:
+                    u = 1                
                 
-                if a[1] == "sx":
-                    x = float(a[2])
+                if a[1+u] == "sx":
+                    x = float(a[2+u])
                     y = 0
                     z = 0
-                    rad = float(a[3])
+                    rad = float(a[3+u])
                 else:
                     x = float(a[2])
                     y = float(a[3])

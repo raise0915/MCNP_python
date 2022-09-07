@@ -7,7 +7,6 @@ import openpyxl
 import seaborn as sns
 import numpy as np
 from find_location import find_location
-from make_output_d2o import make_output_d2o
 from plot_result import plot_scatter,plot_line
 import os
 
@@ -54,9 +53,10 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
         return result
     
 
-
+"""test
 from path_holder import path_holder
 PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
 file_name = 'square_1e9'
 data = make_result(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,10*10*np.pi,0.5,1)
 plot_scatter(data,file_name,1)
+"""

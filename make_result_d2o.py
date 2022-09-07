@@ -2,13 +2,15 @@ from find_location import find_location
 from calc_dose_d2o import dose_boron,dose_neutron,dose_nitro,dose_gamma
 from make_output_d2o import make_output_d2o
 
+import numpy as np
 import openpyxl
 import pandas as pd
 import os
 
 cell_start = 300
-cell_end = 307
-def make_result_d2o(input_env,output_env,file_name,area,out) :
+cell_end = 340
+
+def make_result_d2o(input_env,output_env,file_name,area,flag,out) :
 
         # make dir
         if not os.path.exists(output_env):
@@ -26,12 +28,7 @@ def make_result_d2o(input_env,output_env,file_name,area,out) :
         location = find_location(input_env,file_name,2)
         location = location.set_index(data.index)     
         
-        for i in range(cell_start,cell_end+1):
-            if i ==2:
-                flag = 1
-            else:
-                flag = 2
-            
+        for i in range(cell_start,cell_end+1):    
             # Calculate Dose and Combine results
             boron = dose_boron(data["Boron"][i],area,flag,1)
             nitro = dose_nitro(data["Nitrogen"][i],area,1)
@@ -51,11 +48,16 @@ def make_result_d2o(input_env,output_env,file_name,area,out) :
                 data_ex.to_excel(writer, sheet_name='MCNP_exN')
                 result.to_excel(writer, sheet_name=f'Result')
         
+        print(" FINISH ")
         return result
 
 # """test
 from path_holder import path_holder
 PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
-file_name = 'd2o_tset_h0.2'
-make_result_d2o(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,2,1)
+file_name = 'd2o_h0'
+area = (0.125**2)*np.pi
+
+# areaのあとflag 1:tumor 2:normal tissue (brain)
+make_result_d2o(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,1,2,1)
 # """
+

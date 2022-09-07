@@ -1,13 +1,16 @@
 import pandas as pd
 
 cell_start = 300
-cell_end = 307
+cell_end = 340
 
 def make_output_d2o(output_env,file_name,out) -> pd.DataFrame:
     data = pd.DataFrame()
     items = ["Boron","Neutron","Nitrogen","Gamma"] # four pattern -> add them according to 
+    
+    # make labels for tallys
     cell = [i for i in range(cell_start,cell_end+1)]
     data["cell"] = cell
+    
     count = 0
     res = []
     error = []
