@@ -30,7 +30,7 @@ def dose_boron(f4,area,flag:int,cf)->float:
 def dose_nitro(f4,area,cf) -> float:
     flux_n = 8.22e13 # neutron flux [count/min]
     density = 1.03 # density[g/cc]
-    CBE = 3.0 
+    CBE = 3.2
     Q = 0.626 # energy by boron-neutron reaction
     energy = 0.626*(10**6)*1.6*(10**-19) #[J]
     

@@ -9,9 +9,9 @@ from run_mcnp import run_mcnp
 from makefile_exN import  makefile_exN_D2O
 from change_rate_d2o import change_rate_d2o
 
-area = np.pi*(0.125**2)
+# area = np.pi*(0.125**2)
 
-rate_list = [0,0.1,0.2] # hard water rate
+rate_list = [0.0,0.1,0.2] # hard water rate
 def main():
     PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
     for rate in rate_list:
@@ -21,7 +21,7 @@ def main():
         
         # add information - cf:Current/Flux ratio, rad:beam rad, E:beam energy
         file_name = change_rate_d2o(filename,rate)        
-        # make file - exclude Nitrogenvc   in brain
+        # make file - exclude Nitrogen in brain
         makefile_exN_D2O(PATH_INPUT,file_name)
 
         
@@ -29,12 +29,11 @@ def main():
         if not os.path.exists(f'{PATH_OUTPUT}{file_name}'):
             os.mkdir(f'{PATH_OUTPUT}{file_name}') 
             
-        # mcnp_run     
+        # mcnp_run - d2o version
         run_mcnp(file_name,2)
         
-        flag = 1 # tumor
         try:
-            make_result_d2o(PATH_INPUT,PATH_OUTPUT,file_name,area,flag,1)
+            make_result_d2o(PATH_INPUT,PATH_OUTPUT,file_name,1,1)
         except:
             pass
         
@@ -43,7 +42,7 @@ def main():
             os.remove(PATH_MCNP+"/runtpe")
         
         t2 = time.time()
-        print((t2-t1)/60) #分
+        print((t2-t1)/60) # minitues
 
 
 if __name__ =='__main__':
