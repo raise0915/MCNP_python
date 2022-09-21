@@ -15,7 +15,7 @@ rate_list = [0.0,0.1,0.2] # hard water rate
 def main():
     PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
     for rate in rate_list:
-        filename= "d2o_temp"
+        filename= "d2o_temp" # "d2o_temp"
         
         t1 = time.time()
         
@@ -33,7 +33,7 @@ def main():
         run_mcnp(file_name,2)
         
         try:
-            make_result_d2o(PATH_INPUT,PATH_OUTPUT,file_name,1,1)
+            make_result_d2o(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,1,1)
         except:
             pass
         

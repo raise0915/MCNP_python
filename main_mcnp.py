@@ -35,6 +35,7 @@ def main():
         # Version: Deep seated Protocol  
         # add information - cf:Current/Flux ratio, rad:beam rad, E:beam energy
         file_name = add_elements(filename,cf,rad,E)
+        
         # make file - exclude Nitrogenvc   in brain
         makefile_exN(PATH_INPUT,file_name)
         
@@ -46,7 +47,8 @@ def main():
         run_mcnp(file_name,1)
         
         try:
-            result = make_result(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,area,cf,1)
+            make_result(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,area,cf,1)
+            
         except:
             pass
         
@@ -60,4 +62,4 @@ def main():
 if __name__ =='__main__':
     main()
     
-    
+            
