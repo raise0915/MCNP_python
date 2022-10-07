@@ -10,6 +10,8 @@ from find_location import find_location
 from plot_result import plot_scatter,plot_line
 import os
 
+start_cell = 2
+end_cell = 45
 def make_result(input_env,output_env,file_name,area,cf,out) :
         # make dir
         
@@ -17,7 +19,8 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
         data = make_output(output_env,file_name,out)
         data_ex = make_output(output_env,f'{file_name}_exN',out)
         
-        result = []
+        result_normal = []
+        result_tumor = []
         # Columns 
         items = ["Boron","Neutron","Nitrogen","Gamma","Total"]
         
@@ -25,32 +28,39 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
         location = find_location(input_env,file_name,1)
         location = location.set_index(data.index)     
         
-        for i in range(2,43):
+        for i in range(start_cell,end_cell):
             if i==2:
                 flag = 1
             else:
                 flag = 2
             
             # Calculate Dose and Combine results
-            boron = dose_boron(data["Boron"][i],area,flag,cf)
+            boron_tumor = dose_boron(data["Boron"][i],area,flag,cf)
+            boron_normal = dose_boron(data["Boron"][i],area,flag,cf)
             nitro = dose_nitro(data["Nitrogen"][i],area,cf)
             neutron = dose_neutron(data_ex["Neutron"][i],area,cf)
             gamma = dose_gamma(data["Gamma"][i],area,cf)
-            total = boron+nitro+neutron+gamma
-            result.append([boron,nitro,neutron,gamma,total])
+            total_normal = boron_normal+nitro+gamma+neutron
+            total_tumor = boron_tumor+nitro+gamma+neutron
+            result_normal.append([boron_normal,neutron,nitro,gamma,total_normal])
+            result_tumor.append([boron_tumor,neutron,nitro,gamma,total_tumor])
 
         # Make DataFrame of the result
-        result = pd.DataFrame(result,columns=items,index=data.index)
-        result = pd.merge(result,location,left_index=True,right_index=True)
+        result_normal = pd.DataFrame(result_normal,columns=items,index=data.index)
+        result_normal = pd.merge(result_normal,location,left_index=True,right_index=True)
+
+        result_tumor = pd.DataFrame(result_tumor,columns=items,index=data.index)
+        result_tumor = pd.merge(result_tumor,location,left_index=True,right_index=True)
         
         # Write Excel if out == 1
         if out == 1:
             with pd.ExcelWriter(f"{output_env}{file_name}_output.xlsx") as writer:
                 data.to_excel(writer, sheet_name='MCNP')
                 data_ex.to_excel(writer, sheet_name='MCNP_exN')
-                result.to_excel(writer, sheet_name=f'Result')
+                result_normal.to_excel(writer, sheet_name=f'Result_Normal')
+                result_tumor.to_excel(writer, sheet_name=f'Result_Tumor')
         
-        return result
+        return 0
     
 
 """test

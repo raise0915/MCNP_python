@@ -10,7 +10,7 @@ import os
 cell_start = 300
 cell_end = 340
 
-def make_result_d2o(input_env,output_env,file_name,area,flag,out) :
+def make_result_d2o(input_env,output_env,file_name,area,out) :
 
         # make dir
         if not os.path.exists(output_env):
@@ -20,7 +20,8 @@ def make_result_d2o(input_env,output_env,file_name,area,flag,out) :
         data = make_output_d2o(output_env,file_name,out)
         data_ex = make_output_d2o(output_env,f'{file_name}_exN',out)
         
-        result = []
+        result_normal = []
+        result_tumor = []
         # Columns 
         items = ["Boron","Neutron","Nitrogen","Gamma","Total"]
         
@@ -30,34 +31,31 @@ def make_result_d2o(input_env,output_env,file_name,area,flag,out) :
         
         for i in range(cell_start,cell_end+1):    
             # Calculate Dose and Combine results
-            boron = dose_boron(data["Boron"][i],area,flag,1)
+            boron_tumor = dose_boron(data["Boron"][i],area,1,1)
+            boron_normal = dose_boron(data["Boron"][i],area,2,1)
             nitro = dose_nitro(data["Nitrogen"][i],area,1)
             neutron = dose_neutron(data_ex["Neutron"][i],area,1)
             gamma = dose_gamma(data["Gamma"][i],area,1)
-            total = boron+nitro+gamma+neutron
-            result.append([boron,neutron,nitro,gamma,total])
+            total_normal = boron_normal+nitro+gamma+neutron
+            total_tumor = boron_tumor+nitro+gamma+neutron
+            result_normal.append([boron_normal,neutron,nitro,gamma,total_normal])
+            result_tumor.append([boron_tumor,neutron,nitro,gamma,total_tumor])
 
         # Make DataFrame of the result
-        result = pd.DataFrame(result,columns=items,index=data.index)
-        result = pd.merge(result,location,left_index=True,right_index=True)
-        
+        result_normal = pd.DataFrame(result_normal,columns=items,index=data.index)
+        result_normal = pd.merge(result_normal,location,left_index=True,right_index=True)
+
+        result_tumor = pd.DataFrame(result_tumor,columns=items,index=data.index)
+        result_tumor = pd.merge(result_tumor,location,left_index=True,right_index=True)
+                
         # Write Excel if out == 1
         if out == 1:
             with pd.ExcelWriter(f"{output_env}{file_name}_output.xlsx") as writer:
                 data.to_excel(writer, sheet_name='MCNP')
                 data_ex.to_excel(writer, sheet_name='MCNP_exN')
-                result.to_excel(writer, sheet_name=f'Result')
+                result_normal.to_excel(writer, sheet_name=f'Result_Normal')
+                result_tumor.to_excel(writer, sheet_name=f'Result_Tumor')
         
         print(" FINISH ")
-        return result
-
-# """test
-from path_holder import path_holder
-PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
-file_name = 'd2o_h0'
-area = (0.125**2)*np.pi
-
-# areaのあとflag 1:tumor 2:normal tissue (brain)
-make_result_d2o(PATH_INPUT,f'{PATH_OUTPUT}{file_name}/',file_name,1,2,1)
-# """
+        return 0
 

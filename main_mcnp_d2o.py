@@ -9,13 +9,12 @@ from run_mcnp import run_mcnp
 from makefile_exN import  makefile_exN_D2O
 from change_rate_d2o import change_rate_d2o
 
-# area = np.pi*(0.125**2)
-
 rate_list = [0.0,0.1,0.2] # hard water rate
 def main():
     PATH_INPUT,PATH_OUTPUT,PATH_MCNP = path_holder()
     for rate in rate_list:
-        filename= "d2o_temp" # "d2o_temp"
+        # template
+        filename= "d2o_temp"
         
         t1 = time.time()
         
@@ -38,8 +37,15 @@ def main():
             pass
         
         # 不要なファイルの削除
-        if os.path.exists(PATH_MCNP+"/runtpe"):
+        try:
             os.remove(PATH_MCNP+"/runtpe")
+        except:
+            pass
+        
+        try:
+            os.remove(PATH_MCNP+"/runtpf")
+        except:
+            pass
         
         t2 = time.time()
         print((t2-t1)/60) # minitues

@@ -10,9 +10,8 @@ from run_mcnp import run_mcnp
 from add_elements import add_elements
 from makefile_exN import makefile_exN
 
-area = np.pi*(10**2)
-
-
+area = np.pi*(10**2) # whole brain area
+# This is for deep-seated cancer protocol system on BNCT
 
 def main():
     cf = [0.5,0.6,0.7,0.8,0.9]
@@ -26,17 +25,19 @@ def main():
     
 
     for rad,cf,E in elements:
-        if cf == 0.5 and E == 0.01 and rad == 5:
-            continue
-        print(cf,rad,E)
+        print("==========START SIMULATION==========")
+        print("Condition")
+        print(f"CF : {cf}")
+        print(f"Beam Radius : {rad}")
+        print(f"Beam Energy : {E}")
         
         t1 = time.time()
                     
         # Version: Deep seated Protocol  
-        # add information - cf:Current/Flux ratio, rad:beam rad, E:beam energy
+        # add information - cf:Current/Flux ratio, rad:beam radius, E:beam energy
         file_name = add_elements(filename,cf,rad,E)
         
-        # make file - exclude Nitrogenvc   in brain
+        # make file - exclude Nitrogen
         makefile_exN(PATH_INPUT,file_name)
         
         # make dir
@@ -56,7 +57,9 @@ def main():
             os.remove(PATH_MCNP+"/runtpe")
         
         t2 = time.time()
-        print((t2-t1)/60) #分
+        print(f"TIME : {(t2-t1)/60}") #分
+        print("==========END SIMULATION==========")
+        
 
 
 if __name__ =='__main__':
