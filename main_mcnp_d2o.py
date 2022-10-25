@@ -25,7 +25,9 @@ def main():
 
         
         # make dir
-        if not os.path.exists(f'{PATH_OUTPUT}{file_name}'):
+        if os.path.exists(f'{PATH_OUTPUT}{file_name}'):
+            continue
+        else:
             os.mkdir(f'{PATH_OUTPUT}{file_name}') 
             
         # mcnp_run - d2o version

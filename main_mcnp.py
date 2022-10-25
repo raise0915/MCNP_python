@@ -25,11 +25,15 @@ def main():
     
 
     for rad,cf,E in elements:
-        print("==========START SIMULATION==========")
+        print("==========SET CONDITION==========")
+        
         print("Condition")
         print(f"CF : {cf}")
         print(f"Beam Radius : {rad}")
         print(f"Beam Energy : {E}")
+        
+        print("==========START SIMULATION==========")
+
         
         t1 = time.time()
                     
@@ -43,6 +47,8 @@ def main():
         # make dir
         if not os.path.exists(f'{PATH_OUTPUT}{file_name}'):
             os.mkdir(f'{PATH_OUTPUT}{file_name}') 
+        else:
+            continue
             
         # mcnp_run     
         run_mcnp(file_name,1)
