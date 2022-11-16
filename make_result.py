@@ -16,9 +16,12 @@ def make_result(input_env,output_env,file_name,area,cf,out) :
         # make dir
         
         # create csv of output
-        data = make_output(output_env,file_name,out)
-        data_ex = make_output(output_env,f'{file_name}_exN',out)
-        
+        try:
+            data = make_output(output_env,file_name,out)
+            data_ex = make_output(output_env,f'{file_name}_exN',out)
+        except:
+            raise FileNotFoundError
+    
         result_normal = []
         result_tumor = []
         # Columns 

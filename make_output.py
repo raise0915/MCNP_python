@@ -53,7 +53,7 @@ def make_output(output_env,file_name,out) -> pd.DataFrame:
             data[items[count]] = res
             data[items[count]+str("_error")] = error
 
-    data = data.set_index("cell")
+    data = data.set_index("cell",)
     
     
      # save original_data to csv 
